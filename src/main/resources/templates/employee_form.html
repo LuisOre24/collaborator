@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>System | Employee</title>
+</head>
+<body>
+<ul id="slide-out" class="sidenav grey darken-2">
+    <li>
+        <div class="user-view blue-grey lighten-2 center-align">
+            <!--<div class="background">
+                <img src="images/office.jpg">
+            </div>-->
+            <img src="../img/user-admin.jpg" class="light-green darken-4 image-user">
+            <!--<a href="#user"><img class="center-align circle light-green darken-4"></a>-->
+            <a href="#name"><span class="black-text name">Admin System</span></a>
+            <a href="#email"><span class="black-text email">administrator@gmail.com</span></a>
+            <div class="divider"></div>
+        </div>
+
+    </li>
+
+    <li><a th:href="@{/companies}">Compañias</a></li>
+    <li><a th:href="@{/subsidiaries}">Proyectos</a></li>
+    <li></li>
+    <li><a th:href="@{/departments}">Oficinas</a></li>
+    <li><a th:href="@{/positions}">Cargo</a></li>
+    <li><a th:href="@{/employees}">Colaboradores</a></li>
+    <li><a th:href="@{/accounts-types}">Tipos de Cuentas</a></li>
+    <li><a th:href="@{/accounts}">Cuentas</a></li>
+    <li><a th:href="@{/documents}">Documentos</a></li>
+
+</ul>
+
+<nav>
+    <div class="nav-wrapper grey darken-3">
+        <!--<a href="#!" data-target="slide-out" class="brand-logo sidenav-trigger"><i class="material-icons">menu</i>Logo</a>-->
+        <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="sass.html"><i class="material-icons">search</i></a></li>
+            <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
+            <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
+            <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <div class="container-main">
+
+    <h2 th:text="${ employee.idEmployee } ? 'EDITAR DATOS DEL COLABORADOR' : 'CREAR NUEVO COLABORADOR'"></h2>
+
+
+
+<form action="" th:object="${employee}" method="POST" class="col s12">
+
+    <div class="input-field col s6" th:if="${employee.idEmployee}">
+        <input type="text" id="idEmployee" name="idEmployee" th:field="*{idSubsidiary}" readonly="true">
+        <label for="idEmployee">ID del Colaborador*</label>
+    </div>
+
+    <div class="notification-alert"  th:errors = "*{name}"></div>
+
+    <div class="input-field col s6">
+
+        <input type="text" id="name" name="name" th:field="*{name}" >
+        <label for="name">Primer Nombre*</label>
+    </div>
+
+    <div class="notification-alert"  th:errors = "*{secondName}"></div>
+
+    <div class="input-field col s6">
+
+        <input type="text" id="secondName" name="secondName" th:field="*{secondName}" >
+        <label for="secondName">Segundo Nombre*</label>
+    </div>
+
+    <div class="notification-alert" th:errors = "*{lastname}"></div>
+    <div class="input-field col s6">
+
+
+        <input type="text" id="lastname" name="nameSubsidiary" th:field="*{lastname}" >
+        <label for="lastname">Apellido Paterno*</label>
+    </div>
+
+    <div class="notification-alert" th:errors = "*{secondLastname}"></div>
+    <div class="input-field col s6">
+
+
+        <input type="text" id="secondLastname" name="secondLastname" th:field="*{secondLastname}" >
+        <label for="secondLastname">Apellido Materno*</label>
+    </div>
+
+    <div class="notification-alert"  th:errors = "*{document}"></div>
+    <div class="input-field col s6">
+        <select  th:field="*{document}">
+            <option value="" selected>Elija una opción</option>
+            <option th:selected="${document == employee.document}" th:each="document : ${documents}" th:value="${document.idDocument}" th:text="|${document.abbreviation} - ${document.documentDesc}|"></option>
+        </select>
+        <label>Tipo de Documento</label>
+    </div>
+
+    <div class="notification-alert" th:errors = "*{numberDocument}"></div>
+    <div class="input-field col s6">
+
+        <input type="text" id="numberDocument" name="numberDocument" th:field="*{numberDocument}" >
+        <label for="numberDocument">Nro de Documento*</label>
+    </div>
+
+    <div class="notification-alert"  th:errors = "*{workArea}"></div>
+    <div class="input-field col s6">
+        <select  th:field="*{workArea}">
+            <option value="" selected>Elija una opción</option>
+            <option th:selected="${workArea == employee.workArea}" th:each="workArea : ${workareas}" th:value="${workArea.idWorkArea}" th:text="${workArea.descWorkArea}"></option>
+        </select>
+        <label>Área de Trabajo</label>
+    </div>
+
+
+    <div class="notification-alert"  th:errors = "*{subsidiary}"></div>
+    <div class="input-field col s6">
+        <select  th:field="*{subsidiary}">
+            <option value="" selected>Elija una opción</option>
+            <option th:selected="${subsidiary == employee.subsidiary}" th:each="subsidiary : ${subsidiaries}" th:value="${subsidiary.idSubsidiary}" th:text="${subsidiary.nameSubsidiary}"></option>
+        </select>
+        <label>Proyecto Asignado</label>
+    </div>
+
+
+    <div class="notification-alert"  th:errors = "*{position}"></div>
+    <div class="input-field col s6">
+        <select  th:field="*{position}">
+            <option value="" selected>Elija una opción</option>
+            <option th:selected="${position == employee.position}" th:each="position : ${positions}" th:value="${position.idPosition}" th:text="${position.descPosition}"></option>
+        </select>
+        <label>Cargo</label>
+    </div>
+
+
+    <div th:if="${employee.idEmployee}"  class="input-field col s6">
+
+        <input type="text" id="estado" name="estado" th:field="*{status}" >
+        <label for="estado">Estado</label>
+    </div>
+
+
+    <button class="waves-effect waves-light btn green left" th:text="${employee.idEmployee}? 'ACTUALIZAR' : 'REGISTRAR'"></button>
+    <a th:href="@{/employees}" class="btn waves-effect waves-light red right"><i class="material-icons">keyboard_return</i>RETORNAR</a>
+
+</form>
+
+</div>
+</main>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var select = document.querySelectorAll('select');
+
+    var elems = document.querySelectorAll('.sidenav');
+
+    var form_select = M.FormSelect.init(select);
+    var instances = M.Sidenav.init(elems);
+  });
+
+</script>
+
+</html>

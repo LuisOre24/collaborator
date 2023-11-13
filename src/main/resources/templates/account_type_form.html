@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/styles/style.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>System | Company</title>
+</head>
+<body>
+
+<ul id="slide-out" class="sidenav grey darken-2">
+    <li>
+        <div class="user-view blue-grey lighten-2 center-align">
+            <!--<div class="background">
+                <img src="images/office.jpg">
+            </div>-->
+            <img src="../img/user-admin.jpg" class="light-green darken-4 image-user">
+            <!--<a href="#user"><img class="center-align circle light-green darken-4"></a>-->
+            <a href="#name"><span class="black-text name">Admin System</span></a>
+            <a href="#email"><span class="black-text email">administrator@gmail.com</span></a>
+            <div class="divider"></div>
+        </div>
+
+    </li>
+
+    <li><a th:href="@{/companies}">Compañias</a></li>
+    <li><a th:href="@{/subsidiaries}">Proyectos</a></li>
+    <li></li>
+    <li><a th:href="@{/departments}">Oficinas</a></li>
+    <li><a th:href="@{/positions}">Cargo</a></li>
+    <li><a th:href="@{/employees}">Colaboradores</a></li>
+    <li><a th:href="@{/accounts-types}">Tipos de Cuentas</a></li>
+    <li><a th:href="@{/accounts}">Cuentas</a></li>
+    <li><a th:href="@{/documents}">Documentos</a></li>
+
+</ul>
+
+<nav>
+    <div class="nav-wrapper grey darken-3">
+        <!--<a href="#!" data-target="slide-out" class="brand-logo sidenav-trigger"><i class="material-icons">menu</i>Logo</a>-->
+        <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="sass.html"><i class="material-icons">search</i></a></li>
+            <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
+            <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
+            <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <div class="container-main">
+
+        <h2 th:text="${accountType.idAccountType } ? 'EDITAR TIPO DE CUENTA' : 'CREAR NUEVO TIPO DE CUENTA'"></h2>
+
+
+        <form action="" th:object="${accountType}" method="POST" class="col s12">
+
+            <div class="input-field col s6" th:if="${accountType.idAccountType}">
+                <input type="text" id="idAccountType" name="idAccountType" th:field="*{idAccountType}" readonly="true">
+                <label for="idAccountType">ID de la compañia*</label>
+            </div>
+
+            <div class="notification-alert" th:errors="*{descAccountType}"></div>
+
+            <div class="input-field col s6">
+                <input type="text" id="descAccountType" name="descAccountType" th:field="*{descAccountType}">
+                <label for="descAccountType">Tpo de Cuenta*</label>
+            </div>
+
+            <div class="notification-alert" th:errors="*{description}"></div>
+
+            <div class="input-field col s6">
+                <input type="text" id="description" name="description" th:field="*{description}">
+                <label for="description">Descripcion*</label>
+            </div>
+
+            <div th:if="${accountType.idAccountType}" class="input-field col s6">
+                <input type="text" id="status" name="status" th:field="*{status}">
+                <label for="status">Estado</label>
+            </div>
+
+
+            <button class="waves-effect waves-light btn green left"
+                    th:text="${accountType.idAccountType}? 'ACTUALIZAR' : 'REGISTRAR'"></button>
+            <a th:href="@{/accounts-types}" class="btn waves-effect waves-light red right"><i class="material-icons">keyboard_return</i>RETORNAR</a>
+
+        </form>
+
+    </div>
+</main>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems);
+  });
+
+</script>
+
+</html>

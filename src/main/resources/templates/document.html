@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <title>System | Company</title>
+</head>
+<body>
+
+<ul id="slide-out" class="sidenav grey darken-2">
+    <li>
+        <div class="user-view blue-grey lighten-2 center-align">
+            <!--<div class="background">
+                <img src="images/office.jpg">
+            </div>-->
+            <img src="../img/user-admin.jpg" class="light-green darken-4 image-user">
+            <!--<a href="#user"><img class="center-align circle light-green darken-4"></a>-->
+            <span class="black-text name" th:text="|Usuario: ${#authentication.getPrincipal().getUsername()}|">account</span>
+            <span class="black-text name" th:text="|Rol: ${#authentication.getPrincipal().getAuthorities()}|">User System</span>
+<!--            <a href="#"><span class="black-text email">administrator@gmail.com</span></a>-->
+            <div class="divider"></div>
+        </div>
+
+    </li>
+
+    <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/companies}">Compañias</a></li>
+    <li><a th:href="@{/subsidiaries}">Proyectos</a></li>
+    <li></li>
+    <li><a th:href="@{/departments}">Oficinas</a></li>
+    <li><a th:href="@{/positions}">Cargo</a></li>
+    <li><a th:href="@{/documents}">Cargo</a></li>
+    <li><a th:href="@{/employees}">Colaboradores</a></li>
+    <li><a th:href="@{/accounts-types}">Tipos de Cuentas</a></li>
+    <li><a th:href="@{/accounts}">Cuentas</a></li>
+    <li><a th:href="@{/documents}">Documentos</a></li>
+</ul>
+
+<nav>
+    <div class="nav-wrapper grey darken-3">
+        <!--<a href="#!" data-target="slide-out" class="brand-logo sidenav-trigger"><i class="material-icons">menu</i>Logo</a>-->
+        <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+         <ul class="right hide-on-med-and-down">
+<!--        <ul id='dropdown1' class='dropdown-content'> -->
+            <!--<li><a href="sass.html"><i class="material-icons">search</i></a></li>
+            <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
+            <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li> -->
+            <li><a th:href="@{/logout}"><i class="material-icons">exit_to_app</i></a></li>
+        </ul>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <div class="container-main">
+<!--      <h2 th:class="title">Compañias</h2> -->
+
+        <h4>Lista de Documentos Registrados</h4>
+
+        <a th:href="@{/documents/new}" class="btn-floating btn-large waves-effect waves-light green right"><i
+                class="material-icons">add</i></a>
+
+        <table class="highlight">
+            <thead>
+            <tr>
+                <th>ID Documento</th>
+                <th>Documento</th>
+                <th>Abreviatura</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="document : ${documents}">
+                <td th:text="${document.idDocument}"></td>
+                <td th:text="${document.documentDesc}"></td>
+                <td th:text="${document.abbreviation}"></td>
+                <td th:text="${ document.status ? 'ACTIVO' : 'INACTIVO' }"></td>
+                <td>
+                    <a th:href="@{documents/edit/{id}(id=${document.idDocument})}"
+                       class="btn-floating waves-effect yellow"><i class="material-icons">edit</i></a>
+                    <a th:href="@{documents/delete/{id}(id=${document.idDocument})}"
+                       class="btn-floating waves-effect red"><i class="material-icons">delete</i></a>
+                    <!--            <a id="delete" class="waves-effect waves-light btn modal-trigger" href="#modal1" data-target="modal1" data-id="{{company.idCompany}}">Modal</a>-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems);
+
+    var dropElems = document.querySelectorAll('.dropdown-trigger');
+    var instancesDrop = M.Dropdown.init(dropElems);
+  });
+
+
+
+</script>
+
+
+</html>
